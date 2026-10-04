@@ -1,26 +1,492 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   Typefaces — self-hosted.
+   Archivo is a variable grotesque with a width axis (62–125%), used expanded
+   for display type. IBM Plex Mono carries numerals, formulas and data only.
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin-ext.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plexmono-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plexmono-400-latin-ext.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plexmono-500-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plexmono-500-latin-ext.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plexmono-600-latin.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plexmono-600-latin-ext.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------------------------------------------------------------------------
+   Tokens
+--------------------------------------------------------------------------- */
+
+@theme {
+  --color-porcelain: #f2f3f0;
+  --color-paper: #ffffff;
+  --color-ink: #0f1211;
+  --color-moss: #4d5651;
+  --color-fog: #e7e9e3;
+  --color-line: #dcdfd7;
+  --color-line-strong: #c4c8be;
+  --color-fermor: #75fb90;
+  --color-forest: #076b39;
+  --color-signal: #c22d1d;
+  --color-graphite: #101413;
+  --color-graphite-2: #1a211d;
+  --color-slate: #8b938d;
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-porcelain);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+  }
+
+  ::selection {
+    background: var(--color-fermor);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------------------------
+   Layout shell
+--------------------------------------------------------------------------- */
+
+.shell {
+  width: min(100% - clamp(2rem, 6vw, 5.5rem), 1320px);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(4.25rem, 8.5vw, 7.5rem);
+}
+
+/* ---------------------------------------------------------------------------
+   Type scale — Archivo, expanded on display sizes
+--------------------------------------------------------------------------- */
+
+.t-display {
+  font-size: clamp(2.65rem, 6.4vw, 5.25rem);
+  line-height: 0.94;
+  letter-spacing: -0.032em;
+  font-weight: 640;
+  font-stretch: 116%;
+}
+
+.t-h2 {
+  font-size: clamp(1.95rem, 3.6vw, 3.1rem);
+  line-height: 1;
+  letter-spacing: -0.026em;
+  font-weight: 620;
+  font-stretch: 112%;
+}
+
+.t-h3 {
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+  font-weight: 620;
+  font-stretch: 108%;
+}
+
+.t-lede {
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  line-height: 1.55;
+  letter-spacing: -0.011em;
+  font-weight: 420;
+}
+
+.t-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: -0.006em;
+  font-weight: 420;
+}
+
+.t-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  font-weight: 430;
+}
+
+/* Sentence-case micro label — never uppercased */
+.t-label {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  font-weight: 540;
+  letter-spacing: -0.002em;
+}
+
+.t-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons — full states
+--------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.875rem;
+  padding-inline: 1.375rem;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 560;
+  letter-spacing: -0.008em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 120ms ease,
+    box-shadow 160ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.btn-green {
+  background: var(--color-fermor);
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px rgba(15, 18, 17, 0.14);
+}
+
+.btn-green:hover {
+  background: #8bfc9f;
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 18, 17, 0.2),
+    0 6px 18px -8px rgba(7, 107, 57, 0.55);
+}
+
+.btn-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn-ink:hover {
+  background: #262c29;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px var(--color-line-strong);
+}
+
+.btn-outline:hover {
+  background: rgba(15, 18, 17, 0.05);
+  box-shadow: inset 0 0 0 1px var(--color-ink);
+}
+
+.btn-on-green {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn-on-green:hover {
+  background: #000;
+}
+
+.btn-ghost-on-green {
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1.5px rgba(15, 18, 17, 0.45);
+}
+
+.btn-ghost-on-green:hover {
+  box-shadow: inset 0 0 0 1.5px var(--color-ink);
+  background: rgba(15, 18, 17, 0.07);
+}
+
+/* ---------------------------------------------------------------------------
+   Range sliders — calibrated instrument feel
+--------------------------------------------------------------------------- */
+
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 26px;
+  background: transparent;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.range:active {
+  cursor: grabbing;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--range-fill, var(--color-ink)) var(--range-pct, 50%),
+    var(--range-rest, rgba(15, 18, 17, 0.14)) var(--range-pct, 50%)
+  );
+}
+
+.range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--range-fill, var(--color-ink)) var(--range-pct, 50%),
+    var(--range-rest, rgba(15, 18, 17, 0.14)) var(--range-pct, 50%)
+  );
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: var(--range-thumb, var(--color-ink));
+  border: 3px solid var(--color-paper);
+  box-shadow: 0 1px 4px rgba(15, 18, 17, 0.35);
+  transition: transform 140ms ease;
+}
+
+.range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--range-thumb, var(--color-ink));
+  border: 3px solid var(--color-paper);
+  box-shadow: 0 1px 4px rgba(15, 18, 17, 0.35);
+  transition: transform 140ms ease;
+}
+
+.range:hover::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+.range:hover::-moz-range-thumb {
+  transform: scale(1.12);
+}
+
+.range:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.range--dark {
+  --range-fill: var(--color-fermor);
+  --range-rest: rgba(255, 255, 255, 0.16);
+  --range-thumb: var(--color-fermor);
+}
+
+.range--dark::-webkit-slider-thumb {
+  border-color: var(--color-graphite);
+}
+
+.range--dark::-moz-range-thumb {
+  border-color: var(--color-graphite);
+}
+
+.range--dark:focus-visible {
+  outline-color: var(--color-fermor);
+}
+
+/* ---------------------------------------------------------------------------
+   Motion — one orchestrated hero sequence, nothing decorative elsewhere
+--------------------------------------------------------------------------- */
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes settle-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.seq-item {
+  opacity: 0;
+  animation: settle-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.seq-fade {
+  opacity: 0;
+  animation: fade-in 800ms ease both;
+}
+
+.draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 1100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .seq-item,
+  .seq-fade {
+    opacity: 1;
+    transform: none;
+  }
+
+  .draw-path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
 }
